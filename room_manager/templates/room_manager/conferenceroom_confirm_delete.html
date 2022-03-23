@@ -1,0 +1,12 @@
+{% extends 'room_manager/base.html' %}
+{% load static %}
+{% block title %} DELETE ROOM {% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" value="{{ object.id }}">
+    <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+    <input type="submit" class="btn btn-primary" name="delete" value="delete">
+</form>
+
+{% endblock %}

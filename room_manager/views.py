@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 # Create your views here.
@@ -19,11 +19,33 @@ class RoomListView(ListView):
     template_name = 'room_manager/conferenceroom_list.html'
 
 
-class AddRoomView(CreateView):
+class RoomDetailView(DetailView):
+
+    model = ConferenceRoom
+
+
+class RoomAddView(CreateView):
 
     model = ConferenceRoom
     fields = ['name', 'capacity', 'projector']
     context_object_name = 'add_new_room_to_database'
+
+    def get_success_url(self):
+        return reverse('room_list',)
+
+
+class RoomUpdateView(UpdateView):
+    model = ConferenceRoom
+    fields = ['name', 'capacity', 'projector']
+    context_object_name = 'edit_existing_room_in_database'
+
+    def get_success_url(self):
+        return reverse('room_list',)
+
+
+class RoomDeleteView(DeleteView):
+
+    model = ConferenceRoom
 
     def get_success_url(self):
         return reverse('room_list',)
