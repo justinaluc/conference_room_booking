@@ -13,3 +13,5 @@ class RoomListView(ListView):
 
     model = ConferenceRoom
     paginate_by = 12
+    context_object_name = 'list_of_all_rooms_in_database'
+    template_name = 'room_manager/conferenceroom_list.html'

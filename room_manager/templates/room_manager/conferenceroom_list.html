@@ -1,0 +1,10 @@
+{% extends 'room_manager/base.html' %}
+{% load static %}
+{% block title %} ALL ROOMS {% endblock %}
+{% block content %}
+{% if context %}
+    <p>{{ context }}</p>
+{% else %}
+    <h2> empty conference room list</h2>
+{% endif %}
+{% endblock %}
