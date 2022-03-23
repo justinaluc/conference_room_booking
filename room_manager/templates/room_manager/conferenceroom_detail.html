@@ -1,15 +1,7 @@
 {% extends 'room_manager/base.html' %}
 {% load static %}
-{% block title %} ALL ROOMS {% endblock %}
+{% block title %} ROOM DETAILS {% endblock %}
 {% block content %}
-<h1>Conference Room List:</h1>
-  <ul>
-    {% for room in object_list %}
-      <li>
-        <a href="{% url 'room_detail' pk=room.pk %}">{{room.name}}:</a> {{room.capacity}}
-      </li><br>
-    {% empty %}
-      <p>empty conference room list</p>
-    {% endfor %}
-  </ul>
+<p>Conference Room Name:<b> {{object.name}}</b></p>
+
 {% endblock %}
