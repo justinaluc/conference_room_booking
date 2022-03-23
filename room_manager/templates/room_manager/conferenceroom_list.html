@@ -2,9 +2,14 @@
 {% load static %}
 {% block title %} ALL ROOMS {% endblock %}
 {% block content %}
-{% if context %}
-    <p>{{ context }}</p>
-{% else %}
-    <h2> empty conference room list</h2>
-{% endif %}
+<h1>Conference Room List:</h1>
+  <ul>
+    {% for room in object_list %}
+      <li>
+        <a href="{{ room.get_absolute_url }}">x</a>{{room.name}}: {{room.capacity}}
+      </li><br>
+    {% empty %}
+      <p>empty conference room list</p>
+    {% endfor %}
+  </ul>
 {% endblock %}

@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.urls import reverse
+from django.views.generic import CreateView
 from django.views.generic.list import ListView
 
 # Create your views here.
@@ -15,3 +17,13 @@ class RoomListView(ListView):
     paginate_by = 12
     context_object_name = 'list_of_all_rooms_in_database'
     template_name = 'room_manager/conferenceroom_list.html'
+
+
+class AddRoomView(CreateView):
+
+    model = ConferenceRoom
+    fields = ['name', 'capacity', 'projector']
+    context_object_name = 'add_new_room_to_database'
+
+    def get_success_url(self):
+        return reverse('room_list',)
