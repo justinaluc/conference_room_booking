@@ -10,7 +10,7 @@
         | capacity: {{room.capacity}} | availability: Yes/No | projector: {{room.projector}}
         <button><a href="{% url 'room_update' pk=room.pk %}">edit</a></button>
         <button><a href="{% url 'room_delete' pk=room.pk %}">delete</a></button>
-        <button><a href="#">reserve</a></button>
+        <button><a href="{% url 'room_reserve' room_id=room.pk %}">reserve</a></button>
       </li><br>
     {% empty %}
       <p>empty conference room list</p>
