@@ -3,17 +3,31 @@
 {% block title %} ALL ROOMS {% endblock %}
 {% block content %}
 <h1>Conference Room List:</h1>
-  <ul>
+  <table>
+    <tr>
+      <th>room's name</th>
+      <th>capacity</th>
+      <th>availability</th>
+      <th>projector</th>
+      <th>actions</th>
+    </tr>
     {% for room in object_list %}
-      <li>
-        <a href="{% url 'room_detail' pk=room.pk %}">{{room.name}}:</a>
-        | capacity: {{room.capacity}} | availability: Yes/No | projector: {{room.projector}}
-        <button><a href="{% url 'room_update' pk=room.pk %}">edit</a></button>
-        <button><a href="{% url 'room_delete' pk=room.pk %}">delete</a></button>
-        <button><a href="{% url 'room_reserve' room_id=room.pk %}">reserve</a></button>
-      </li><br>
+      <tr>
+        <td>
+          <a href="{% url 'room_detail' pk=room.pk %}">{{room.name}}:</a>
+        </td>
+        <td> {{room.capacity}} </td>
+        <td> Yes/No </td>
+        <td> {{room.projector}} </td>
+        <td>
+          <button><a href="{% url 'room_update' pk=room.pk %}">edit</a></button>
+          <button><a href="{% url 'room_delete' pk=room.pk %}">delete</a></button>
+          <button><a href="{% url 'room_reserve' room_id=room.pk %}">reserve</a></button>
+        </td>
+      </tr>
     {% empty %}
       <p>empty conference room list</p>
     {% endfor %}
-  </ul>
+  </table>
+
 {% endblock %}
