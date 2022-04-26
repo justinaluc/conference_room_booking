@@ -2,6 +2,29 @@
 {% load static %}
 {% block title %} ROOM DETAILS {% endblock %}
 {% block content %}
-<p>Conference Room Name:<b> {{object.name}}</b></p>
+    <h2>Conference Room Name:<b> {{room.name}}</b></h2>
+    <p>Conference Room Capacity:<b> {{room.capacity}}</b></p>
+    <p>Projector availability:
+    {% if room.projector %}
+        <span style="color:green;">&#9745;</span>
+    {% else %}
+        <span style="color:red;">&#9746;</span>
+    {% endif %}
+    <p>
+        <button><a href="{% url 'room_update' pk=room.pk %}">edit</a></button>
+        <button><a href="{% url 'room_delete' pk=room.pk %}">delete</a></button>
+        <button><a href="{% url 'room_reserve' room_id=room.pk %}">reserve</a></button>
+    </p>
 
+    {% if reservations %}
+        <h3>Future reservations:</h3>
+            <ul>
+            {% for reservation in reservations %}
+                <li>
+                    <h4>Date: <b>{{reservation.date}}</b></h4>
+                    <p>Comment: {{reservation.comment}}</p>
+                </li>
+            {% endfor %}
+            </ul>
+    {% endif %}
 {% endblock %}
