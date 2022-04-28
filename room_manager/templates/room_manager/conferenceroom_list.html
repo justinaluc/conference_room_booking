@@ -1,5 +1,4 @@
 {% extends 'room_manager/base.html' %}
-{% load static %}
 {% block title %} ALL ROOMS {% endblock %}
 {% block content %}
 <h1>Conference Room List:</h1>
@@ -7,7 +6,7 @@
     <tr>
       <th>room's name</th>
       <th>capacity</th>
-      <th>availability</th>
+      <th>room availability</th>
       <th>projector</th>
       <th>actions</th>
     </tr>
@@ -18,7 +17,13 @@
         </td>
         <td> {{room.capacity}} </td>
         <td> Yes/No </td>
-        <td> {{room.projector}} </td>
+        <td>
+        {% if room.projector %}
+          <span style="color:green;">&#9745;</span>
+        {% else %}
+          <span style="color:red;">&#9746;</span>
+        {% endif %}
+        </td>
         <td>
           <button><a href="{% url 'room_update' pk=room.pk %}">edit</a></button>
           <button><a href="{% url 'room_delete' pk=room.pk %}">delete</a></button>
