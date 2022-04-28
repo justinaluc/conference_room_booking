@@ -1,0 +1,35 @@
+{% extends 'room_manager/base.html' %}
+{% block title %} ROOM RESERVATION {% endblock %}
+{% block content %}
+<!--Form -->
+<div class="card">
+  <div class="card-body">
+    <h2>{{ room.name }}</h2>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="reservation-date">Reservation date</label>
+        <input type="date" id="reservation-date" name="reservation-date" max="3000-12-31" min="1000-01-01" class="form-control">
+      </div>
+        <br>
+      <div class="form-group">
+        <label for="comment">Comment</label>
+        <textarea class="form-control" id="comment" name="comment"></textarea>
+      </div>
+        <br>
+      <button type="submit" class="btn btn-primary">Reserve</button>
+    </form>
+  </div>
+</div>
+<!-- Form end -->
+{% if error %}
+<!-- Form error -->
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{error}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- Form error -->
+{% endif %}
+{% endblock %}

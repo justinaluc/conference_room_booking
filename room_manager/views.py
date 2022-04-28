@@ -72,7 +72,7 @@ class ReservationView(View):
 
         if ReserveRoom.objects.filter(room_id=room, date=date):
             return render(request, "room_manager/reserveroom_detail.html",
-                          context={"room": room, "error": "Conference Room already reserved!"})
+                          context={"room": room, "error": f"Conference Room already reserved for this date! ({date})"})
         if date < str(datetime.date.today()):
             return render(request, "room_manager/reserveroom_detail.html",
                           context={"room": room, "error": "Date is from the past!"})
