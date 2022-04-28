@@ -32,7 +32,7 @@
           <a class="nav-item nav-link" href="{% url 'room_add' %}">Add room</a>
         </div>
         </div>
-        <p class="nav-item text-muted m-2">Today is {.....date....}</p>
+        <p class="nav-item text-muted m-2">Today is {% now 'DATE_FORMAT' %}</p>
     </nav>
     <!-- Nav -->
         <div class="container my-5">

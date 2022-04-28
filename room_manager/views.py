@@ -16,10 +16,22 @@ def home_page(request):
 class RoomListView(ListView):
 
     model = ConferenceRoom
-    paginate_by = 12
+    paginate_by = 20
     context_object_name = 'list_of_all_rooms_in_database'
     template_name = 'room_manager/conferenceroom_list.html'
     ordering = ['name']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['today'] = datetime.date.today()
+        return context
+
+    # def get(self, request):
+    #     rooms = ConferenceRoom.objects.all()
+    #     for room in rooms:
+    #         reservation_dates = [reservation.date for reservation in room.reserveroom_set.all()]
+    #         room.reserved = datetime.date.today() in reservation_dates
+    #     return render(request, "room_manager/conferenceroom_list.html", context={"rooms": rooms})
 
 
 class RoomDetailView(DetailView):

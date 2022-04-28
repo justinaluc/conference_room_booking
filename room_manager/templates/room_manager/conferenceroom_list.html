@@ -6,7 +6,7 @@
     <tr style="height: 50px">
       <th style="width:200px">room's name</th>
       <th style="width:150px">capacity</th>
-      <th style="width:150px">availability</th>
+      <th style="width:150px">today</th>
       <th style="width:150px">projector</th>
       <th style="width:400px">actions</th>
     </tr>
@@ -16,7 +16,13 @@
           <a href="{% url 'room_detail' pk=room.pk %}">{{room.name}}</a>
         </td>
         <td style="text-align:left"> {{room.capacity}} </td>
-        <td> Yes/No </td>
+        <td style="text-align:left">
+          {% for room in room.reserveroom_set.all %}
+              {% if room.date == today %}
+                <p style="color:red;">occupied</p>
+              {% endif %}
+          {% endfor %}
+        </td>
         <td>
         {% if room.projector %}
           <span style="color:green;">&#9745;</span>
