@@ -1,29 +1,38 @@
 {% extends 'room_manager/base.html' %}
 {% block title %} ROOM DETAILS {% endblock %}
 {% block content %}
-    <h2>Conference Room Name:<b> {{room.name}}</b></h2>
-    <p>Conference Room Capacity:<b> {{room.capacity}}</b></p>
-    <p>Projector availability:
-    {% if room.projector %}
-        <span style="color:green;">&#9745;</span>
-    {% else %}
-        <span style="color:red;">&#9746;</span>
-    {% endif %}
-    <p>
-        <button><a href="{% url 'room_update' pk=room.pk %}">edit</a></button>
-        <button><a href="{% url 'room_delete' pk=room.pk %}">delete</a></button>
-        <button><a href="{% url 'room_reserve' room_id=room.pk %}">reserve</a></button>
-    </p>
-
-    {% if reservations %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title my-2">{{room.name}}</h2>
+    </div>
+    <div class="card-body">
+        <p>capacity:<b> {{room.capacity}}</b></p>
+        <p>projector:
+        {% if room.projector %}
+            <span style="color:green;">&#9745;</span>
+        {% else %}
+            <span style="color:red;">&#9746;</span>
+        {% endif %}
+        <p>
+            <a class="btn btn-primary" href="{% url 'room_update' pk=room.pk %}">edit</a>
+            <a class="btn btn-danger" href="{% url 'room_delete' pk=room.pk %}">delete</a>
+            <a class="btn btn-success" href="{% url 'room_reserve' room_id=room.pk %}">reserve</a>
+        </p>
+        {% if reservations %}
+        <br>
         <h3>Future reservations:</h3>
-            <ul>
-            {% for reservation in reservations %}
-                <li>
-                    <h4>Date: <b>{{reservation.date}}</b></h4>
-                    <p>Comment: {{reservation.comment}}</p>
-                </li>
-            {% endfor %}
-            </ul>
-    {% endif %}
+
+                <ul>
+                {% for reservation in reservations %}
+                    <li>
+                        <h4><b>{{reservation.date}}</b></h4>
+                        <p>{{reservation.comment}}</p>
+                    </li>
+                {% endfor %}
+                </ul>
+        {% else %}
+        <h3>no future reservations yet</h3>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

@@ -1,21 +1,21 @@
 {% extends 'room_manager/base.html' %}
 {% block title %} ALL ROOMS {% endblock %}
 {% block content %}
-<h1>Conference Room List:</h1>
-  <table>
-    <tr>
-      <th>room's name</th>
-      <th>capacity</th>
-      <th>room availability</th>
-      <th>projector</th>
-      <th>actions</th>
+<h1>Conference Room List</h1>
+  <table class="table table-light">
+    <tr style="height: 50px">
+      <th style="width:200px">room's name</th>
+      <th style="width:150px">capacity</th>
+      <th style="width:150px">availability</th>
+      <th style="width:150px">projector</th>
+      <th style="width:400px">actions</th>
     </tr>
     {% for room in object_list %}
       <tr>
         <td>
-          <a href="{% url 'room_detail' pk=room.pk %}">{{room.name}}:</a>
+          <a href="{% url 'room_detail' pk=room.pk %}">{{room.name}}</a>
         </td>
-        <td> {{room.capacity}} </td>
+        <td style="text-align:left"> {{room.capacity}} </td>
         <td> Yes/No </td>
         <td>
         {% if room.projector %}
@@ -25,9 +25,9 @@
         {% endif %}
         </td>
         <td>
-          <button><a href="{% url 'room_update' pk=room.pk %}">edit</a></button>
-          <button><a href="{% url 'room_delete' pk=room.pk %}">delete</a></button>
-          <button><a href="{% url 'room_reserve' room_id=room.pk %}">reserve</a></button>
+          <a class="btn btn-primary" href="{% url 'room_update' pk=room.pk %}">edit</a>
+          <a class="btn btn-danger" href="{% url 'room_delete' pk=room.pk %}">delete</a>
+          <a class="btn btn-success" href="{% url 'room_reserve' room_id=room.pk %}">reserve</a>
         </td>
       </tr>
     {% empty %}

@@ -75,7 +75,7 @@ class ReservationView(View):
                           context={"room": room, "error": f"Conference Room already reserved for this date! ({date})"})
         if date < str(datetime.date.today()):
             return render(request, "room_manager/reserveroom_detail.html",
-                          context={"room": room, "error": "Date is from the past!"})
+                          context={"room": room, "error": "Date is from the past! You have to choose the future date."})
 
         ReserveRoom.objects.create(room_id=room, date=date, comment=comment)
         return redirect("room_list")
