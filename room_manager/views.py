@@ -75,7 +75,8 @@ class ReservationView(View):
 
     def get(self, request, room_id):
         room = ConferenceRoom.objects.get(id=room_id)
-        return render(request, "room_manager/reserveroom_detail.html", context={"room": room})
+        reservations = room.reserveroom_set.all()
+        return render(request, "room_manager/reserveroom_detail.html", context={"room": room, "reservations": reservations})
 
     def post(self, request, room_id):
         room = ConferenceRoom.objects.get(id=room_id)
