@@ -17,8 +17,21 @@
         <textarea class="form-control" id="comment" name="comment"></textarea>
       </div>
         <br>
-      <button type="submit" class="btn btn-primary">Reserve</button>
+      <button type="submit" class="btn btn-success">reserve</button>
     </form>
+    {% if reservations %}
+        <br>
+        <h3>Future reservations:</h3>
+                <ul>
+                {% for reservation in reservations %}
+                    <li>
+                        <p><b>{{reservation.date}}</b></p>
+                    </li>
+                {% endfor %}
+                </ul>
+        {% else %}
+        <h3>no reservations yet</h3>
+        {% endif %}
   </div>
 </div>
 <!-- Form end -->
@@ -32,4 +45,5 @@
 </div>
 <!-- Form error -->
 {% endif %}
+
 {% endblock %}

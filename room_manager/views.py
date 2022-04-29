@@ -16,10 +16,22 @@ def home_page(request):
 class RoomListView(ListView):
 
     model = ConferenceRoom
-    paginate_by = 12
+    paginate_by = 9
     context_object_name = 'list_of_all_rooms_in_database'
     template_name = 'room_manager/conferenceroom_list.html'
     ordering = ['name']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['today'] = datetime.date.today()
+        return context
+
+    # def get(self, request):
+    #     rooms = ConferenceRoom.objects.all()
+    #     for room in rooms:
+    #         reservation_dates = [reservation.date for reservation in room.reserveroom_set.all()]
+    #         room.reserved = datetime.date.today() in reservation_dates
+    #     return render(request, "room_manager/conferenceroom_list.html", context={"rooms": rooms})
 
 
 class RoomDetailView(DetailView):
@@ -63,7 +75,8 @@ class ReservationView(View):
 
     def get(self, request, room_id):
         room = ConferenceRoom.objects.get(id=room_id)
-        return render(request, "room_manager/reserveroom_detail.html", context={"room": room})
+        reservations = room.reserveroom_set.filter(date__gte=str(datetime.date.today())).order_by('date')
+        return render(request, "room_manager/reserveroom_detail.html", context={"room": room, "reservations": reservations})
 
     def post(self, request, room_id):
         room = ConferenceRoom.objects.get(id=room_id)
@@ -75,7 +88,7 @@ class ReservationView(View):
                           context={"room": room, "error": f"Conference Room already reserved for this date! ({date})"})
         if date < str(datetime.date.today()):
             return render(request, "room_manager/reserveroom_detail.html",
-                          context={"room": room, "error": "Date is from the past!"})
+                          context={"room": room, "error": "Date is from the past! You have to choose the future date."})
 
         ReserveRoom.objects.create(room_id=room, date=date, comment=comment)
         return redirect("room_list")
