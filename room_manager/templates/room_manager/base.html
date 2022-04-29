@@ -27,12 +27,17 @@
     <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="{% url 'home' %}">Conference rooms manager</a>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="{% url 'room_list' %}">Show all<span class="sr-only"></span></a>
-          <a class="nav-item nav-link" href="{% url 'room_add' %}">Add room</a>
+            <div class="navbar-nav">
+              <a class="nav-item nav-link active" href="{% url 'room_list' %}">Show all<span class="sr-only"></span></a>
+              <a class="nav-item nav-link" href="{% url 'room_add' %}">Add room</a>
+            </div>
         </div>
+        <div class="nav-item">
+            <form class="form-inline">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
+              <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
-        <p class="nav-item text-muted m-2">Today is {% now 'DATE_FORMAT' %}</p>
     </nav>
     <!-- Nav -->
     <div class="container my-5">
@@ -84,7 +89,10 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <span class="text-muted"> created by <a href="https://github.com/justinaluc"><b>justinaluc</b></a> in March 2022</span>
+            <span class="text-muted"> created by
+                <a href="https://github.com/justinaluc"><b>justinaluc</b></a> in March 2022
+            </span>
+            <span>Today is {% now 'DATE_FORMAT' %}</span>
         </div>
     </footer>
     <!-- Footer -->
