@@ -1,5 +1,6 @@
 import datetime
 
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
@@ -55,6 +56,7 @@ class RoomAddView(CreateView):
 
 
 class RoomUpdateView(UpdateView):
+
     model = ConferenceRoom
     fields = ['name', 'capacity', 'projector']
     context_object_name = 'edit_existing_room_in_database'
@@ -83,6 +85,9 @@ class ReservationView(View):
         date = request.POST.get("reservation-date")
         comment = request.POST.get("comment")
 
+        if date == '':
+            return render(request, "room_manager/reserveroom_detail.html",
+                          context={"room": room, "error": "You have to insert date of the meeting."})
         if ReserveRoom.objects.filter(room_id=room, date=date):
             return render(request, "room_manager/reserveroom_detail.html",
                           context={"room": room, "error": f"Conference Room already reserved for this date! ({date})"})
@@ -92,3 +97,28 @@ class ReservationView(View):
 
         ReserveRoom.objects.create(room_id=room, date=date, comment=comment)
         return redirect("room_list")
+
+
+class SearchView(ListView):
+
+    model = ConferenceRoom
+    context_object_name = 'list_of_searched_rooms'
+    template_name = 'room_manager/search_room.html'
+
+    def post(self, request):
+        today = datetime.date.today()
+        searched = request.POST['searched']
+        if searched.isdigit():
+            rooms = ConferenceRoom.objects.filter(capacity__gte=searched).order_by('capacity')
+        elif searched in ['yes', 'y', 'projector']:
+            rooms = ConferenceRoom.objects.filter(projector=True).order_by('name')
+        elif searched in ['no', 'n']:
+            rooms = ConferenceRoom.objects.filter(projector=False).order_by('name')
+        else:
+            rooms = ConferenceRoom.objects.filter(name__contains=searched.upper()).order_by('name')
+
+        return render(request, 'room_manager/search_room.html',
+                      {'searched': searched, 'rooms': rooms, 'today': today})
+
+    def get(self, request):
+        return render(request, 'room_manager/search_room.html', {})
