@@ -8,11 +8,11 @@
     <div class="card-body">
         <p>capacity:<b> {{room.capacity}}</b></p>
         <p>projector:
-        {% if room.projector %}
+            {% if room.projector %}
             <span style="color:green;">&#9745;</span>
-        {% else %}
+            {% else %}
             <span style="color:red;">&#9746;</span>
-        {% endif %}
+            {% endif %}
         <p>
             <a class="btn btn-primary" href="{% url 'room_update' pk=room.pk %}">edit</a>
             <a class="btn btn-danger" href="{% url 'room_delete' pk=room.pk %}">delete</a>
@@ -20,16 +20,16 @@
         </p>
         {% if reservations %}
         <br>
-        <h3>Future reservations:</h3>
+        <h3>The nearest future reservations:</h3>
 
-                <ul>
-                {% for reservation in reservations %}
-                    <li>
-                        <h4><b>{{reservation.date}}</b></h4>
-                        <p>{{reservation.comment}}</p>
-                    </li>
-                {% endfor %}
-                </ul>
+        <ul>
+            {% for reservation in reservations %}
+            <li>
+                <h4><b>{{reservation.date}}</b></h4>
+                <p>{{reservation.comment}}</p>
+            </li>
+            {% endfor %}
+        </ul>
         {% else %}
         <h3>no future reservations yet</h3>
         {% endif %}

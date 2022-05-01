@@ -1,0 +1,47 @@
+{% extends 'room_manager/base.html' %}
+{% block title %} SEARCH FOR ROOM {% endblock %}
+{% block content %}
+{% if searched %}
+    <h1>You searched for <b>{{ searched }}</b></h1>
+    <table class="table table-light">
+    <tr style="height: 50px">
+      <th style="width:200px">room's name</th>
+      <th style="width:150px">capacity</th>
+      <th style="width:150px">today</th>
+      <th style="width:150px">projector</th>
+      <th style="width:400px">actions</th>
+    </tr>
+    {% for room in rooms %}
+      <tr>
+        <td>
+          <a href="{% url 'room_detail' pk=room.pk %}">{{room.name}}</a>
+        </td>
+        <td style="text-align:left"> {{room.capacity}} </td>
+        <td style="text-align:left">
+          {% for room in room.reserveroom_set.all %}
+              {% if room.date == today %}
+                <p style="color:red;">occupied</p>
+              {% endif %}
+          {% endfor %}
+        </td>
+        <td>
+        {% if room.projector %}
+          <span style="color:green;">&#9745;</span>
+        {% else %}
+          <span style="color:red;">&#9746;</span>
+        {% endif %}
+        </td>
+        <td>
+          <a class="btn btn-primary" href="{% url 'room_update' pk=room.pk %}">edit</a>
+          <a class="btn btn-danger" href="{% url 'room_delete' pk=room.pk %}">delete</a>
+          <a class="btn btn-success" href="{% url 'room_reserve' room_id=room.pk %}">reserve</a>
+        </td>
+      </tr>
+    {% empty %}
+      <p>empty conference room list</p>
+    {% endfor %}
+  </table>
+{% else %}
+    <h1>You forgot to fill in what you are looking for...!</h1>
+{% endif %}
+{% endblock %}

@@ -1,47 +1,59 @@
 {% extends 'room_manager/base.html' %}
 {% block title %} ROOM RESERVATION {% endblock %}
 {% block content %}
-<!--Form -->
 <div class="card">
-  <div class="card-body">
-    <h2>{{ room.name }}</h2>
-    <form action="" method="POST">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="reservation-date">Reservation date</label>
-        <input type="date" id="reservation-date" name="reservation-date" max="3000-12-31" min="1000-01-01" class="form-control">
-      </div>
+    <div class="card-header">
+        <h2 class="card-title my-2">{{room.name}}</h2>
+    </div>
+    <div class="card-body">
+        <p>capacity:<b> {{room.capacity}}</b></p>
+        <p>projector:
+            {% if room.projector %}
+            <span style="color:green;">&#9745;</span>
+            {% else %}
+            <span style="color:red;">&#9746;</span>
+            {% endif %}
+        </p>
+        <!--Form -->
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="reservation-date">Reservation date</label>
+                <input type="date" id="reservation-date" name="reservation-date" max="3000-12-31" min="1000-01-01"
+                       class="form-control">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <textarea class="form-control" id="comment" name="comment"></textarea>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-success">reserve</button>
+        </form>
+        {% if reservations %}
         <br>
-      <div class="form-group">
-        <label for="comment">Comment</label>
-        <textarea class="form-control" id="comment" name="comment"></textarea>
-      </div>
-        <br>
-      <button type="submit" class="btn btn-success">reserve</button>
-    </form>
-    {% if reservations %}
-        <br>
-        <h3>Future reservations:</h3>
-                <ul>
-                {% for reservation in reservations %}
-                    <li>
-                        <p><b>{{reservation.date}}</b></p>
-                    </li>
-                {% endfor %}
-                </ul>
+        <h3>The nearest future reservations:</h3>
+        <ul>
+            {% for reservation in reservations %}
+            <li>
+                <p><b>{{reservation.date}}</b></p>
+            </li>
+            {% endfor %}
+        </ul>
         {% else %}
+        <br>
         <h3>no reservations yet</h3>
         {% endif %}
-  </div>
+    </div>
 </div>
 <!-- Form end -->
 {% if error %}
 <!-- Form error -->
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  {{error}}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+    {{error}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 <!-- Form error -->
 {% endif %}

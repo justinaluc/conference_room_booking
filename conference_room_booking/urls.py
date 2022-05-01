@@ -23,7 +23,8 @@ from room_manager.views import (
     RoomUpdateView,
     RoomDeleteView,
     RoomAddView,
-    ReservationView
+    ReservationView,
+    SearchView
     )
 
 urlpatterns = [
@@ -35,4 +36,5 @@ urlpatterns = [
     path('room/modify/<int:pk>', RoomUpdateView.as_view(), name="room_update"),
     path('room/reserve/<int:room_id>', ReservationView.as_view(), name="room_reserve"),
     path('room/new', RoomAddView.as_view(), name="room_add"),
+    path('search_room/', SearchView.as_view(), name="search_room"),
 ]
